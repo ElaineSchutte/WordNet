@@ -12,6 +12,7 @@ public class WordNet {
  //use ArrayList b/c easy access for large group of numbers, (shouldn't be any duplicate #s anyway)
   private final Map<String,ArrayList<Integer>> wordToid; //Word is the key, ID number is the value
   private final Map<Integer,String> idToword; //ID number is the key, words are the value
+  private Digraph graph;
 
    // constructor takes the name of the two input files
  public WordNet(String synsets, String hypernyms){
@@ -30,13 +31,18 @@ public class WordNet {
       String regex2=" ";
       String[] synWord=preSplit.split(regex2);
       idToword.put(synID,preSplit);
-      for (String syn:synWord){
-        if(!wordToid.contains(syn)){
-          wordToid.put(syn, 
+      for (String syn:synWord){ //Goes through string of words
+        if(wordToid.containsKey(syn)==0){ //if map doesn't already have this word
+		  List<Integer> newID= new ArrayList<Integer>();
+          wordToid.put(syn, newID); //put it in the map and give it an empty arraylist
+		  wordToid.get(syn).add(synID); //add the current ID to the list
+		}
+		else {//if it does exist
+			wordToid.get(syn).add(synID); //add the id to current array list
         }
-    }
-     
-     
+	  }     
+	}
+	  this.graph= new Digraph(idToword.size()); //create directed graph with #of ids
    }
 
    // all WordNet nouns
@@ -60,3 +66,4 @@ public class WordNet {
      public static void main(String[] args){
    }
 }
+
