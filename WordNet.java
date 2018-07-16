@@ -47,10 +47,12 @@ public class WordNet {
 
    // all WordNet nouns
    public Iterable<String> nouns(){
+	   return wordToid.keySet();
    }
 
    // is the word a WordNet noun?
      public boolean isNoun(String word){
+		 return wordToid.containsKey(word);
    }
 
    // a synset (second field of synsets.txt) that is a shortest common ancestor
