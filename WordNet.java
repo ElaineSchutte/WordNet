@@ -30,6 +30,10 @@ public class WordNet {
       String regex2=" ";
       String[] synWord=preSplit.split(regex2);
       idToword.put(synID,preSplit);
+      for (String syn:synWord){
+        if(!wordToid.contains(syn)){
+          wordToid.put(syn, 
+        }
     }
      
      
