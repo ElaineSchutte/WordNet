@@ -1,6 +1,7 @@
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
 import java.lang.Integer;
+import java.lang.Iterable;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -11,6 +12,8 @@ public class ShortestCommonAncestor {
  
  
  public ShortestCommonAncestor(Digraph G) {
+     if (G == null) throw new NullPointerException();
+     if (G.V() == 0){ throw new IllegalArgumentException();}
      graph = G;
  }
  
@@ -47,7 +50,17 @@ public class ShortestCommonAncestor {
  }
  
  public int length(Iterable<Integer> subsetA, Iterable<Integer> subsetB) {
-  BreadthFirstDirectedPaths aBfs = new BreadthFirstDirectedPaths(graph,subsetA);
+     if (subsetA == null) throw new NullPointerException();
+     if (subsetB == null) throw new NullPointerException();
+     for (Integer subA: subsetA){
+         if(subA == null) throw new NullPointerException();
+     }
+     for (Integer subB: subsetB){
+         if(subB == null) throw new NullPointerException();
+     }
+
+     
+     BreadthFirstDirectedPaths aBfs = new BreadthFirstDirectedPaths(graph,subsetA);
   BreadthFirstDirectedPaths bBfs = new BreadthFirstDirectedPaths(graph,subsetB);
   int sca = -1;
   int minLength = Integer.MAX_VALUE;

@@ -5,6 +5,8 @@ import java.lang.Integer;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdIn;
+
 
 public class WordNet {
  private final HashMap<String,ArrayList<Integer>> wordToId; //Word is the key, ID number is the value
@@ -99,5 +101,18 @@ public class WordNet {
  
  // TODO
  public static void main(String[] args) {
+    In in = new In(args[0]);
+    Digraph G = new Digraph(in);
+    ShortestCommonAncestor rawr = new ShortestCommonAncestor(G);
+    while (!StdIn.isEmpty()) {
+        int v = StdIn.readInt();
+        int w = StdIn.readInt();
+        int length   = rawr.length(v, w);
+        int ancestor = rawr.ancestor(v, w);
+        //System.out.println(sca("cat", "cow"));
+//StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
+        
+
+ }
  }
 }
