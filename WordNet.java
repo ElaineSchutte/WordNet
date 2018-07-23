@@ -15,6 +15,8 @@ public class WordNet {
  public WordNet(String synsets, String hypernyms) {
      if (synsets == null) {throw new NullPointerException();}
      if (hypernyms == null) {throw new NullPointerException();}
+
+     
   wordToId = new HashMap<String,ArrayList<Integer>>();
   idToWord = new HashMap<Integer,ArrayList<String>>();
   
@@ -71,7 +73,7 @@ public class WordNet {
  // TODO
  public String sca(String word1, String word2) { 
      if (word1 == null) {throw new NullPointerException();}
-     if (word2 = null) {throw new NullPointerException();}
+     if (word2 == null) {throw new NullPointerException();}
      if (! isNoun(word1)) {throw new IllegalArgumentException();}
      if (! isNoun(word2)) {throw new IllegalArgumentException();}
      return null;}
@@ -79,10 +81,14 @@ public class WordNet {
  // TODO
  public int distance(String word1, String word2) {
      if (word1 == null) {throw new NullPointerException();}
-     if (word2 = null) {throw new NullPointerException();}
+     if (word2 == null) {throw new NullPointerException();}
      if (! isNoun(word1)) {throw new IllegalArgumentException();}
      if (! isNoun(word2)) {throw new IllegalArgumentException();}
-     return 0;}
+     ShortestCommonAncestor shortAn = new ShortestCommonAncestor(graph);
+     ArrayList<Integer> word1ID = wordToId.get(word1);
+     ArrayList<Integer> word2ID = wordToId.get(word2);
+     return shortAn.length(word1ID, word2ID);
+ }
  
  // TODO
  public static void main(String[] args) {}
