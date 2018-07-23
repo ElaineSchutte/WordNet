@@ -1,90 +1,78 @@
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.HashMap;
-import edu.princeton.cs.algs4.Map;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ArrayList;
 import java.lang.String;
 import java.lang.Integer;
-
-//Synset=words that match
-//hypernyms=ids with relationships to other ids
+import edu.princeton.cs.algs4.Digraph;
 
 public class WordNet {
- //use ArrayList b/c easy access for large group of numbers, (shouldn't be any duplicate #s anyway)
-  private final Map<String,ArrayList<Integer>> wordToid; //Word is the key, ID number is the value
-  private final Map<Integer,String> idToword; //ID number is the key, words are the value
-//  private final Map<Integer,ArrayList<Integer>> hypGraph;
-  private Digraph graph;
-
-   // constructor takes the name of the two input files
- public WordNet(String synsets, String hypernyms){
-   In in= new In(synsets); //inputs file from filename
-   wordToid= new HashMap<String,ArrayList<Integer>>();
-   idToword= new HashMap<Integer,String>();
-//   hypGraph= new HashMap<Integer,ArrayList<Integer>>();
-   String regex=",";
-   String regex2=" ";
-    
-    while (in.hasNextLine()!=0) {
-     
-      String synLine=in.readLine();
-
-      String[] synSplit=synLine.split(regex);
-      int synID=Integer.parseInt(synSplit[0]);
-      String preSplit=synSplit[1];
-      String[] synWord=preSplit.split(regex2);
-      idToword.put(synID,preSplit);
-      for (String syn:synWord){ //Goes through string of words
-        if(wordToid.containsKey(syn)==0){ //if map doesn't already have this word
-		  List<Integer> newID= new ArrayList<Integer>();
-          wordToid.put(syn, newID); //put it in the map and give it an empty arraylist
-		  wordToid.get(syn).add(synID); //add the current ID to the list
-		}
-		else {//if it does exist
-			wordToid.get(syn).add(synID); //add the id to current array list
-        }
-	  }     
-	}
-	  Digraph graph= new Digraph(idToword.size()); //create directed graph with #of ids
-	  in=new In(hypernyms);
-	  while (in.hasNextLine()!=0) {
-		  String hypLine=in.readLine();
-		  String[] hypSplit=hypLine.split(regex);
-		  int hypID=Integer.parseInt(hypSplit[0]);
-		  List<Integer> List= new ArrayList<Integer>();
-		  for (String hyp:hypSplit){
-			  int hypInt=Integer.parseInt(hyp);
-			/*  if (hyp==hypID) {
-				  hypGraph.put(hypID, List); 
-			  else{ hypGraph.get(hypID).add(hyp);}*/
-			  if(hypInt!=hypID) {
-				graph.addEdge(hypID,hypInt); //adds edge directly into graph
+	private final HashMap<String,ArrayList<Integer>> wordToId; //Word is the key, ID number is the value
+	private final HashMap<Integer,ArrayList<String>> idToWord; //ID number is the key, words are the value
+	private final Digraph graph;
+	
+	public WordNet(String synsets, String hypernyms) {
+		wordToId = new HashMap<String,ArrayList<Integer>>();
+		idToWord = new HashMap<Integer,ArrayList<String>>();
+		
+		// constructor takes the name of the two input files
+		// To Process synsets
+		In input = new In(synsets);
+		int totalSynsets=0;
+		while (input.hasNextLine()) {
+			// Parse line
+			String[] synLine = input.readLine().split(",");
+			int synId = Integer.parseInt(synLine[0]);
+			String[] synWords = synLine[1].split(" ");
+			// Map words to unique Id
+			for (int i = 0; i < synWords.length; i++) {
+				if (!wordToId.containsKey(synWords[i])) {//if map doesn't already have this word
+					List<Integer> newIdList = new ArrayList<Integer>();
+					wordToId.put(synWords[i],newIdList); //put it in the map and give it an empty arraylist
+					
 				}
+				wordToId.get(synWords[i]).add(synId);//add the id to current array list
 			}
+			// Map unique Id to words
+			List<String> newWordList = new ArrayList<String>();
+			idToWord.put(synId,newWordList);
+			for (int i = 0; i < synWords.length; i++){
+				newWordList.add(synWord[i]);}
+			idToWord.put(synId,newWordList);
+			totalSynsets++;
 		}
-   }
-  
-
-   // all WordNet nouns
-   public Iterable<String> nouns(){
-	   return wordToid.keySet();
-   }
-
-   // is the word a WordNet noun?
-     public boolean isNoun(String word){
-		 return wordToid.containsKey(word);
-   }
-
-   // a synset (second field of synsets.txt) that is a shortest common ancestor
-   // of noun1 and noun2 (defined below)
-     public String sca(String noun1, String noun2){
-   }
-
-   // distance between noun1 and noun2 (defined below)
-     public int distance(String noun1, String noun2){
-   }
-
-   // do unit testing of this class
-     public static void main(String[] args){
-   }
+		
+		Digraph graph= new Digraph(totalSynsets);
+		// Create directed graph with #of synsets
+		// Process hypernyms
+		input = new In(hypernyms);
+		while (input.hasNextLine()) {
+			// Parse line
+			String[] line = input.readLine().split(",");
+			int Id= Integer.parseInt(line[0]);
+			int[] hyperIds = new int[line.length - 1];
+			for (int i = 0; i < hyperIds.length; i++)
+				hyperIds[i] = Integer.parseInt(line[i + 1]);
+			// Add edges from unique Id to each hypernym Id directly into graph
+			for (int i = 0; i < hyperIds.length; i++)
+				graph.addEdge(Id,hyperIds[i]);
+		}
+	}
+	
+	public Iterable<String> nouns() {
+		return wordToId.keySet();
+	}
+	
+	public boolean isNoun(String word) {
+		return wordToId.containsKey(word);
+	}
+	
+	// TODO
+	public String sca(String word1, String word2) {}
+	
+	// TODO
+	public int distance(String word1, String word2) {}
+	
+	// TODO
+	public static void main(String[] args) {}
 }
-
