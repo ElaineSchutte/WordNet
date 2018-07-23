@@ -14,7 +14,9 @@ public class Outcast {
    int max=-1, maxIndex=-1;
    for (int i=0; i<nouns.length; i++) {
     for (int j=0; j<nouns.length; j++) {
-     distance[i]+=wn.distance(nouns[i],nouns[j]);
+     if (nouns[i]!=nouns[j]){
+      distance[i]+=wn.distance(nouns[i],nouns[j]);
+     }
    }
    if (distance[i]> max) {
     max=distance[i];
