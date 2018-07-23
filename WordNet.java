@@ -1,11 +1,10 @@
-import edu.princeton.cs.algs4.In;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.List;
 import java.lang.String;
 import java.lang.Integer;
 import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
 
 public class WordNet {
  private final HashMap<String,ArrayList<Integer>> wordToId; //Word is the key, ID number is the value
@@ -76,7 +75,15 @@ public class WordNet {
      if (word2 == null) {throw new NullPointerException();}
      if (! isNoun(word1)) {throw new IllegalArgumentException();}
      if (! isNoun(word2)) {throw new IllegalArgumentException();}
-     return null;}
+     ArrayList<Integer> word1ID = wordToId.get(word1);
+     ArrayList<Integer> word2ID = wordToId.get(word2);
+     ShortestCommonAncestor shortAn = new ShortestCommonAncestor(graph);
+     if (shortAn.ancestor(word1ID, word2ID) == 0) return "None";
+     int ancestorID = shortAn.ancestor(word1ID, word2ID);
+     String ancestorWord = idToWord.get(ancestorID).get(0);
+     
+     return ancestorWord; 
+ }
  
  // TODO
  public int distance(String word1, String word2) {
@@ -91,5 +98,6 @@ public class WordNet {
  }
  
  // TODO
- public static void main(String[] args) {}
+ public static void main(String[] args) {
+ }
 }

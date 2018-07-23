@@ -27,10 +27,6 @@ public class Outcast {
            maxIndex = i;
    }
   }
-   for (int i=0; i<nouns.length; i++){
-       System.out.println(distance[i]);
-   }
-   //System.out.println(maxIndex);
   return nouns[maxIndex];
   }
   
