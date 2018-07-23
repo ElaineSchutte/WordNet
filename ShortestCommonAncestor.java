@@ -1,6 +1,9 @@
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
 import java.lang.Integer;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 public class ShortestCommonAncestor {
  private final Digraph graph;
@@ -72,5 +75,18 @@ public class ShortestCommonAncestor {
  }
  
  // TODO
- public static void main(String[] args) {}
+ public static void main(String[] args) {
+
+    In in = new In(args[0]);
+    Digraph G = new Digraph(in);
+    ShortestCommonAncestor sca = new ShortestCommonAncestor(G);
+    while (!StdIn.isEmpty()) {
+        int v = StdIn.readInt();
+        int w = StdIn.readInt();
+        int length   = sca.length(v, w);
+        int ancestor = sca.ancestor(v, w);
+        StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
+    }
+
+ }
 }
