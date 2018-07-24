@@ -5,18 +5,37 @@ import java.lang.Iterable;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
-
+   
+/**
+ * @author Elaine Schutte
+ * @author Abigail Payne
+ */
 
 public class ShortestCommonAncestor {
  private final Digraph graph;
  
+/**
+ * 
+ * This function constructs a ShortestCommonAncestor object containing
+ * a digraph using a DAG 
+ * 
+ * @param G rooted DAG used to construct digraph
+ * @return ShortestCommonAncestor with constructed digraph
+ */
  
  public ShortestCommonAncestor(Digraph G) {
      if (G == null) throw new NullPointerException();
      if (G.V() == 0){ throw new IllegalArgumentException();}
      graph = G;
  }
- 
+ /**
+ * 
+ * This function finds the length of the shortest ancestral path between two points
+ * 
+ * @param v the first of two vertices used to calculate distance
+ * @param w the second of two vertices used to calculate distance
+ * @return the integer value describing the length
+ */
  public int length(int v, int w) {
   BreadthFirstDirectedPaths vBfs = new BreadthFirstDirectedPaths(graph,v);
   BreadthFirstDirectedPaths wBfs = new BreadthFirstDirectedPaths(graph,w);
@@ -34,6 +53,14 @@ public class ShortestCommonAncestor {
   return minLength;
  }
  
+ /**
+ * 
+ * This function finds the shortest common ancestor between two vertices
+ * 
+ * @param v the first of two vertices used to calculate sca
+ * @param w the second of two vertices used to calculate sca
+ * @return the integer value describing the sca
+ */
  public int ancestor(int v, int w) {
   BreadthFirstDirectedPaths vBfs = new BreadthFirstDirectedPaths(graph,v);
   BreadthFirstDirectedPaths wBfs = new BreadthFirstDirectedPaths(graph,w);
@@ -48,7 +75,14 @@ public class ShortestCommonAncestor {
   }
   return sca;
  }
- 
+ /**
+ * 
+ * This function finds the shortest ancestral path between two vertex subsets
+ * 
+ * @param subsetA the first of two vertex subsets used to calculate distance
+ * @param subsetB the second of two vertex subsets used to calculate distance
+ * @return the integer value describing the shortest length between the two points
+ */
  public int length(Iterable<Integer> subsetA, Iterable<Integer> subsetB) {
      if (subsetA == null) throw new NullPointerException();
      if (subsetB == null) throw new NullPointerException();
@@ -74,6 +108,14 @@ public class ShortestCommonAncestor {
   return minLength;
  }
  
+ /**
+ * 
+ * This function finds the shortest common ancestor between two vertex subsets
+ * 
+ * @param subsetA the first of two vertex subsets used to calculate sca
+ * @param subsetB the second of two vertex subsets used to calculate sca
+ * @return the integer value describing the shortest common ancestor
+ */
  public int ancestor(Iterable<Integer> subsetA, Iterable<Integer> subsetB) {
   BreadthFirstDirectedPaths aBfs = new BreadthFirstDirectedPaths(graph,subsetA);
   BreadthFirstDirectedPaths bBfs = new BreadthFirstDirectedPaths(graph,subsetB);

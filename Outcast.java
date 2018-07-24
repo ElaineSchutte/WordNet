@@ -1,14 +1,33 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
-    
+   
+/**
+ * @author Elaine Schutte
+ * @author Abigail Payne
+ */
+
 public class Outcast {
  private WordNet wn;
   
+/**
+ * 
+ * This function constructs an Outcast object containing
+ * a wordnet 
+ * 
+ * @param wordnet wordnet used to find outcast
+ * @return Outcast with constructed wordnet
+ */
   public Outcast(WordNet wordnet){
       if (wordnet == null) {throw new NullPointerException();}
       wn=wordnet;
   }
-  
+   /**
+ * 
+ * This function finds the outcast given an array of WordNet nouns
+ * 
+ * @param nouns takes a of two vertices used to calculate distance
+ * @return string of the outcast
+ */
   public String outcast(String[] nouns){
       if (nouns == null) {throw new NullPointerException();}
       if (nouns.length == 0){throw new IllegalArgumentException();}

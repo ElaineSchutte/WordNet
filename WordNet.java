@@ -7,11 +7,25 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdIn;
 
+/**
+ * @author Elaine Schutte
+ * @author Abigail Payne
+ */
 
 public class WordNet {
  private final HashMap<String,ArrayList<Integer>> wordToId; //Word is the key, ID number is the value
  private final HashMap<Integer,ArrayList<String>> idToWord; //ID number is the key, words are the value
  private final Digraph graph;
+ 
+ /**
+ * 
+ * This function constructs an WordNet using the
+ * synsets and hypernyms files
+ * 
+ * @param synsets name of file with synsets
+ * @param hypernyms name of file with hypernyms
+ * @return WordNet constructed from files
+ */
  
  public WordNet(String synsets, String hypernyms) {
      if (synsets == null) {throw new NullPointerException();}
@@ -62,16 +76,40 @@ public class WordNet {
   }
  }
  
+  /**
+ * 
+ * This function returns a list of nouns 
+ *
+ * @return a String Iterable list containing the nouns
+ */
+ 
  public Iterable<String> nouns() {
   return wordToId.keySet();
  }
+ 
+  /**
+ * 
+ * This function discovers if a string is a noun in the list
+ * 
+ * @param word the string being searched for
+ * @return a true or false value
+ */
  
  public boolean isNoun(String word) {
      if (word == null) {throw new NullPointerException();}
   return wordToId.containsKey(word);
  }
  
- // TODO
+ /**
+ * 
+ * This function finds a synset that is the
+ * shortest ancestor of two nouns
+ * 
+ * @param word1 the first of two words used to find sca
+ * @param word2 the second of two words used to find sca
+ * @return string containing the shortest common ancestor
+ */
+ 
  public String sca(String word1, String word2) { 
      if (word1 == null) {throw new NullPointerException();}
      if (word2 == null) {throw new NullPointerException();}
@@ -87,7 +125,15 @@ public class WordNet {
      return ancestorWord; 
  }
  
- // TODO
+ /**
+ * 
+ * This function finds the distance between two words
+ * 
+ * @param word1 the first of two words used to calculate distance
+ * @param word2 the second of two words used to calculate distance
+ * @return the integer value describing the length
+ */
+ 
  public int distance(String word1, String word2) {
      if (word1 == null) {throw new NullPointerException();}
      if (word2 == null) {throw new NullPointerException();}
